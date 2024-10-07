@@ -1,0 +1,27 @@
+FROM python:3.11-slim as builder
+
+WORKDIR /python_proto
+
+COPY ./proto /python_proto/proto
+
+
+RUN mkdir /python_proto/generated
+
+
+RUN pip install grpcio grpcio-tools
+
+RUN python -m grpc_tools.protoc -I ./proto --python_out=./generated/ --grpc_python_out=./generated/ ./proto/bgremover.proto
+
+
+FROM busybox as final_stage
+
+WORKDIR /output
+
+COPY --from=builder /python_proto/generated /output/generated
+
+
+
+
+
+
+

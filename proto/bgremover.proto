@@ -1,0 +1,20 @@
+syntax="proto3";
+
+package pb;
+
+option go_package = "github.com/root27/bgremover/pb";
+
+message ImageRequest {
+	bytes image = 1;
+}
+
+
+message ImageResponse {
+	bytes processedImage = 1;
+}
+
+
+service RemoveService {
+	
+	rpc removeBG(ImageRequest) returns (ImageResponse) {}
+}
