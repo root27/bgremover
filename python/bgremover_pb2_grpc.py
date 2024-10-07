@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class RemoveServiceStub(object):
+class RemoveStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -34,43 +34,43 @@ class RemoveServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.removeBG = channel.unary_unary(
-                '/proto.RemoveService/removeBG',
+        self.RemoveBG = channel.unary_unary(
+                '/pb.Remove/RemoveBG',
                 request_serializer=bgremover__pb2.ImageRequest.SerializeToString,
                 response_deserializer=bgremover__pb2.ImageResponse.FromString,
                 _registered_method=True)
 
 
-class RemoveServiceServicer(object):
+class RemoveServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def removeBG(self, request, context):
+    def RemoveBG(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_RemoveServiceServicer_to_server(servicer, server):
+def add_RemoveServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'removeBG': grpc.unary_unary_rpc_method_handler(
-                    servicer.removeBG,
+            'RemoveBG': grpc.unary_unary_rpc_method_handler(
+                    servicer.RemoveBG,
                     request_deserializer=bgremover__pb2.ImageRequest.FromString,
                     response_serializer=bgremover__pb2.ImageResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'proto.RemoveService', rpc_method_handlers)
+            'pb.Remove', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('proto.RemoveService', rpc_method_handlers)
+    server.add_registered_method_handlers('pb.Remove', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class RemoveService(object):
+class Remove(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def removeBG(request,
+    def RemoveBG(request,
             target,
             options=(),
             channel_credentials=None,
@@ -83,7 +83,7 @@ class RemoveService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/proto.RemoveService/removeBG',
+            '/pb.Remove/RemoveBG',
             bgremover__pb2.ImageRequest.SerializeToString,
             bgremover__pb2.ImageResponse.FromString,
             options,

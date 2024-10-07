@@ -24,17 +24,18 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x62gremover.proto\x12\x05proto\"\x1d\n\x0cImageRequest\x12\r\n\x05image\x18\x01 \x01(\x0c\"\'\n\rImageResponse\x12\x16\n\x0eprocessedImage\x18\x01 \x01(\x0c\x32H\n\rRemoveService\x12\x37\n\x08removeBG\x12\x13.proto.ImageRequest\x1a\x14.proto.ImageResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x62gremover.proto\x12\x02pb\"\x1d\n\x0cImageRequest\x12\r\n\x05Image\x18\x01 \x01(\x0c\"\'\n\rImageResponse\x12\x16\n\x0eProcessedImage\x18\x01 \x01(\x0c\x32;\n\x06Remove\x12\x31\n\x08RemoveBG\x12\x10.pb.ImageRequest\x1a\x11.pb.ImageResponse\"\x00\x42\x07Z\x05../pbb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'bgremover_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
-  DESCRIPTOR._loaded_options = None
-  _globals['_IMAGEREQUEST']._serialized_start=26
-  _globals['_IMAGEREQUEST']._serialized_end=55
-  _globals['_IMAGERESPONSE']._serialized_start=57
-  _globals['_IMAGERESPONSE']._serialized_end=96
-  _globals['_REMOVESERVICE']._serialized_start=98
-  _globals['_REMOVESERVICE']._serialized_end=170
+  _globals['DESCRIPTOR']._loaded_options = None
+  _globals['DESCRIPTOR']._serialized_options = b'Z\005../pb'
+  _globals['_IMAGEREQUEST']._serialized_start=23
+  _globals['_IMAGEREQUEST']._serialized_end=52
+  _globals['_IMAGERESPONSE']._serialized_start=54
+  _globals['_IMAGERESPONSE']._serialized_end=93
+  _globals['_REMOVE']._serialized_start=95
+  _globals['_REMOVE']._serialized_end=154
 # @@protoc_insertion_point(module_scope)
