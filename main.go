@@ -54,5 +54,11 @@ func main() {
 		log.Fatal("Could not process image ", err)
 	}
 
-	log.Printf("Image processed successfully: %v", res.ProcessedImage)
+	err = os.WriteFile("output2.png", res.ProcessedImage, 0644)
+
+	if err != nil {
+
+		log.Fatal("Could not save processed image ", err)
+
+	}
 }
