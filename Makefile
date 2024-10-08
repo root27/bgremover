@@ -11,5 +11,9 @@ example-cli:
 ##Dockerfile make commands
 
 
+python-build:
+	@docker build -t python-grpc -f ./Dockerfiles/Dockerfile.python_grpc_server .
+
+
 
 
