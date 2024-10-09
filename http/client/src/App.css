@@ -1,0 +1,98 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.App {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    color: #333;
+}
+
+.App-header {
+    background-color: #eee;
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.upload-section {
+    margin: 40px auto;
+    max-width: 600px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+}
+
+.upload-section h2 {
+    margin-bottom: 20px;
+}
+
+.upload-area {
+    border: 2px dashed #ccc;
+    padding: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.upload-area:hover {
+    border-color: #888;
+}
+
+.upload-area.loading {
+    background-color: #e0e0e0;
+}
+
+.upload-area p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.loader {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+input[type="file"] {
+    display: none; /* Hide the default file input */
+}
+
+.image-preview {
+    margin: 20px 0;
+}
+
+.image-preview h4 {
+    margin-bottom: 10px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    margin: 10px 0;
+}

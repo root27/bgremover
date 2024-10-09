@@ -10,10 +10,14 @@ example-cli:
 
 ##Dockerfile make commands
 
-
-python-build:
+python-grpc-build:
 	@docker build -t python-grpc -f ./Dockerfiles/Dockerfile.python_grpc_server .
 
+python-grpc-server:
+	@docker run -p 50051:50051 --name python-grpc-server python-grpc
 
+##Gorelease make commands
 
+release:
+	@goreleaser release --rm-dist
 

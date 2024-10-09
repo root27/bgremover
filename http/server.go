@@ -27,7 +27,11 @@ func main() {
 
 	client := pb.NewRemoveClient(conn)
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/api/bgremove", func(w http.ResponseWriter, r *http.Request) {
+
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
+		w.Header().Set("Content-Type", "image/*")
 
 		image, _, err := r.FormFile("image")
 
