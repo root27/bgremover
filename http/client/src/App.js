@@ -10,13 +10,11 @@ function App() {
     const [error, setError] = useState('');
 
 
-
   const triggerFileSelect = () => {
 
     document.getElementById('file-input').click();
 
   }
-
     
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -52,7 +50,6 @@ function App() {
 
                 responseType: 'blob',
             });
-
 
           const imageUrl = URL.createObjectURL(response.data);
             setProcessedImage(imageUrl);

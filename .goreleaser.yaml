@@ -2,7 +2,7 @@
 version: 2
 
 builds:
-  - binary: bgremover
+  - binary: bgremover-cli
     main: ./main.go
     env:
       - CGO_ENABLED=0
