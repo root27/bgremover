@@ -9,7 +9,7 @@ You can find [releases](https://github.com/root27/bgremover/releases) or if you 
 
 ```code
 
-brew install root27/tools/bgremover
+brew install root27/tools/bgremover-cli
 
 ```
 

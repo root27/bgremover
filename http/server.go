@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"context"
-	"github.com/google/uuid"
 	"github.com/root27/bgremover/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -27,20 +26,6 @@ func main() {
 	defer conn.Close()
 
 	client := pb.NewRemoveClient(conn)
-
-	// Test generate api key
-
-	http.HandleFunc("/generate", func(w http.ResponseWriter, r *http.Request) {
-
-		key := uuid.New().String()
-
-		w.Write([]byte(key))
-
-	})
-
-	/* http.HandleFunc("/api/cli/bg", func(w http.ResponseWriter, r *http.Request) {
-
-	}) */
 
 	http.HandleFunc("/api/bgremove", func(w http.ResponseWriter, r *http.Request) {
 

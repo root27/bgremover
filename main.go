@@ -1,12 +1,12 @@
 package main
 
 import (
-	"context"
+	"bytes"
 	"flag"
 	"fmt"
-	"github.com/root27/bgremover/pb"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"io"
+	"mime/multipart"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -21,6 +21,9 @@ const welcome = `
        |___/                                        
 
 bgremover-cli is a tool to remove background from images
+
+P.S: File can not be larger than 10MB
+
 
 `
 
@@ -64,37 +67,78 @@ func main() {
 
 	fmt.Println("out file: ", outfile)
 
-	conn, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(
+	buf := &bytes.Buffer{}
 
-		insecure.NewCredentials(),
-	))
-	if err != nil {
+	mWriter := multipart.NewWriter(buf)
 
-		fmt.Println("Could not connect to the server")
+	f, err := os.Open(file)
+
+	fileStats, _ := f.Stat()
+
+	if fileStats.Size() > 10*1024*1024 {
+
+		fmt.Println("File is too large")
 		return
 	}
 
-	defer conn.Close()
-
-	client := pb.NewRemoveClient(conn)
-
-	bytesRead, err := os.ReadFile(file)
-
 	if err != nil {
 
-		fmt.Println("Could not read image file")
+		fmt.Println("Error reading file")
 		return
 	}
 
-	res, err := client.RemoveBG(context.Background(), &pb.ImageRequest{Image: bytesRead})
+	defer f.Close()
+
+	fileWriter, err := mWriter.CreateFormFile("image", file)
 
 	if err != nil {
-
-		fmt.Println("Could not process image")
+		fmt.Println("Error creating form file")
 		return
 	}
 
-	err = os.WriteFile(outfile, res.ProcessedImage, 0644)
+	_, err = io.Copy(fileWriter, f)
+
+	if err != nil {
+		fmt.Println("Error writing file")
+		return
+	}
+
+	err = mWriter.Close()
+
+	if err != nil {
+		fmt.Println("Error closing writer")
+		return
+	}
+
+	client := &http.Client{}
+
+	req, err := http.NewRequest("POST", "http://localhost:10000/api/bgremove", buf)
+
+	if err != nil {
+
+		fmt.Println("Error creating request")
+		return
+	}
+
+	req.Header.Add("Content-Type", mWriter.FormDataContentType())
+
+	response, err := client.Do(req)
+
+	if err != nil {
+		fmt.Println("Error processing request")
+		return
+	}
+
+	defer response.Body.Close()
+
+	outData, err := io.ReadAll(response.Body)
+
+	if err != nil {
+		fmt.Println("Error reading response")
+		return
+	}
+
+	err = os.WriteFile(outfile, outData, 0644)
 
 	if err != nil {
 
