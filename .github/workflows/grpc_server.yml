@@ -32,7 +32,7 @@ jobs:
           docker build -t ghcr.io/root27/bgremover:python-server -f Dockerfiles/Dockerfile.python_grpc_server .
       - name: Push image
         run: |
-          docker push ghcr.io/root27/bgremover:python-server
+           docker push ghcr.io/root27/bgremover:python-server
 
 
   deploy-run-image:
