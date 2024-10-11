@@ -1,0 +1,53 @@
+name: Grpc server deployment
+
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - python/**
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-push-image:
+    runs-on: ubuntu-latest
+    name: grpc image
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Docker login
+        uses: docker/login-action
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build image
+        run: |
+          docker build -t ghcr.io/root27/bgremover:python-server -f Dockerfiles/Dockerfile.python_grpc_server .
+      - name: Push image
+        run: |
+          docker push ghcr.io/root27/bgremover:python-server
+
+
+  deploy-run-image:
+    runs-on: ubuntu-latest
+    name: deploy image
+    steps:
+      - name: SSH action
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:python-server
+            docker run -d -p 50051:50051 --name python-grpc ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:python-server 
+
+
