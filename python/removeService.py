@@ -8,6 +8,8 @@ from concurrent import futures
 
 from rembg import remove
 
+
+
 class RemoveServicer(bgremover__pb.RemoveServicer):
     def RemoveBG(self, request, context):
         output = remove(request.Image, force_return_bytes=True)
