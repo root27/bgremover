@@ -28,7 +28,7 @@ jobs:
 
       - name: Docker meta tags
         id: meta
-        uses: docker/metadata-action@latest
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
@@ -37,7 +37,7 @@ jobs:
             type=raw,value=${{ github.ref_name }}
 
       - name: Docker build and push
-        uses: docker/build-push-action@latest
+        uses: docker/build-push-action@v5
         with:
           file: ../../Dockerfiles/Dockerfile.python_grpc_server
           push: true
