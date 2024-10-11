@@ -5,9 +5,8 @@ on:
   push:
     branches:
       - master
-    paths:
-      - python/**
-
+    tags:
+      - python-server*
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -27,12 +26,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build image
-        run: |
-          docker build -t ghcr.io/root27/bgremover:python-server -f Dockerfiles/Dockerfile.python_grpc_server .
-      - name: Push image
-        run: |
-           docker push ghcr.io/root27/bgremover:python-server
+      - name: Docker meta tags
+        id: meta
+        uses: docker/metadata-action@latest
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=raw,value=${{ github.ref_name }}
+
+      - name: Docker build and push
+        uses: docker/build-push-action@latest
+        with:
+          file: ../../Dockerfiles/Dockerfile.python_grpc_server
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
 
   deploy-run-image:
@@ -49,7 +59,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             docker login ghcr.io -u root27 -p ${{ secrets.DOCKER_TOKEN }}
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:python-server
-            docker run -d -p 50051:50051 --name python-grpc ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:python-server 
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+            docker run -d -p 50051:50051 --name python-grpc ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} 
 
 
