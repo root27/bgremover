@@ -20,17 +20,21 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
     
-      - name: Client Directory
-        run: cd http/client
 
       - name: Cache clean npm
-        run: npm cache clean --force
-
+        run: |
+          cd http/client
+          npm cache clean --force
+          
       - name: Install dependencies
-        run: npm ci --force
+        run: |
+          cd http/client
+          npm ci --force
 
       - name: Build
-        run: npm run build
+        run: | 
+          cd http/client
+          npm run build
         env:
           CI: false
 
@@ -41,6 +45,6 @@ jobs:
           host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          source: build/
+          source: http/client/build/
           target: /home/web-apps/bgremover
           
