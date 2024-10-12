@@ -1,0 +1,45 @@
+name: Containers Update
+
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - http/**
+      - python/**
+    tags:
+      - v**
+
+
+jobs:
+  deploy-compose:
+    runs-on: ubuntu-latest
+    name: Compose update
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v5
+      
+      - name: Copy files
+        uses: appleboy/scp-action@master
+        with:
+          username: ${{ secrets.USER }}
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          source: "Dockerfiles/,http/server.go,python/"
+          target: /home/web-apps/bgremover
+          
+
+      - name: SSH action
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+              
+              docker-compose up -d -f /home/web-apps/bgremover/Dockerfiles/docker-compose.yml
+            

@@ -17,7 +17,7 @@ const (
 
 func main() {
 
-	conn, err := grpc.Dial("bgremover-grpc-server", grpc.WithTransportCredentials(
+	conn, err := grpc.Dial("bgremover-grpc-server:50051", grpc.WithTransportCredentials(
 		insecure.NewCredentials(),
 	))
 

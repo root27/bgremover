@@ -1,0 +1,25 @@
+version: "1"
+
+services:
+  bgremover-grpc-client:
+    build: 
+      dockerfile: ./Dockerfile.grpc_client
+    container_name: bgremover-grpc-client
+    ports:
+      - "10000:10000"
+    networks:
+      - bgremover-service
+
+  bgremover-grpc-server:
+    build: 
+      dockerfile: ./Dockerfile.python_grpc_server
+    container_name: bgremover-grpc-server
+    ports:
+      - "50051"
+    networks:
+      - bgremover-service
+
+
+networks:
+  bgremover-service:
+    driver: bridge
