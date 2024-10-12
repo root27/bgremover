@@ -3,6 +3,8 @@ name: Client side deployment
 
 on:
   push:
+    branches:
+      - master
     paths:
       - http/client/**
 
