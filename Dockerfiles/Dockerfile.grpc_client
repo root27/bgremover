@@ -1,0 +1,18 @@
+FROM golang:1.23 as builder
+
+WORKDIR /go-app
+
+COPY . .
+
+RUN go mod download
+
+RUN CGO_ENABLED=0 go build -o ./client.out ./http/server.go
+
+FROM gcr.io/distroless/static
+
+
+COPY --from=builder /go-app/client.out /grpc-client
+
+
+ENTRYPOINT ["/grpc-client"]
+

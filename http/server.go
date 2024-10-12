@@ -17,15 +17,18 @@ const (
 
 func main() {
 
-	conn, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(
+	conn, err := grpc.Dial("bgremover-grpc-server", grpc.WithTransportCredentials(
 		insecure.NewCredentials(),
 	))
 
 	if err != nil {
 
-		log.Fatal("Could not connect to the server", err)
+		log.Println("Could not connect to the server", err)
 
+		return
 	}
+
+	log.Println("Connected to grpc server")
 
 	defer conn.Close()
 
