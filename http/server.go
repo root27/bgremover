@@ -11,6 +11,10 @@ import (
 	"net/http"
 )
 
+const (
+	port = ":10000"
+)
+
 func main() {
 
 	conn, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(
@@ -72,8 +76,8 @@ func main() {
 
 	})
 
-	log.Println("Server starting at port 10000")
+	log.Println("Server starting at port: ", port)
 
-	log.Fatal(http.ListenAndServe(":10000", nil))
+	log.Fatal(http.ListenAndServe(port, nil))
 
 }
