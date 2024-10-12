@@ -65,6 +65,6 @@ jobs:
             fi
 
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-            docker run -d --network bgremover-service --name bgremover-grpc-client ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} 
+            docker run -d -p 10000:10000 --network bgremover-service --name bgremover-grpc-client ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} 
 
 
