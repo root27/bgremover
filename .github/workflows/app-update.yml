@@ -41,5 +41,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
               
-              docker-compose up -d -f /home/web-apps/bgremover/Dockerfiles/docker-compose.yml
+              docker-compose -f /home/web-apps/bgremover/Dockerfiles/docker-compose.yml up -d
             
