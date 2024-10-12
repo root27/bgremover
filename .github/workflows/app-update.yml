@@ -28,7 +28,7 @@ jobs:
           host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          source: "Dockerfiles/,http/server.go,python/"
+          source: "Dockerfiles/,http/server.go,python/,go.mod,go.sum"
           target: /home/web-apps/bgremover
           
 
