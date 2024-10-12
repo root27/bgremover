@@ -58,12 +58,12 @@ jobs:
           script: |
             docker login ghcr.io -u root27 -p ${{ secrets.DOCKER_TOKEN }}
         
-            if [ $(docker ps -q -f name=python-grpc) ]; then
-              docker stop python-grpc
-              docker rm python-grpc
+            if [ $(docker ps -q -f name=bgremover-grpc-server) ]; then
+              docker stop bgremover-grpc-server
+              docker rm bgremover-grpc-server
             fi
 
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-            docker run -d -p 50051:50051 --name python-grpc ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} 
+            docker run -d --network bgremover-service --name bgremover-grpc-server ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} 
 
 
