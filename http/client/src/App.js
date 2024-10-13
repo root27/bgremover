@@ -47,7 +47,7 @@ function App() {
         setLoading(true);
         setError('');
         try {
-      const response = await axios.post('http://localhost:10000/api/bgremove', formData, {
+      const response = await axios.post('https://api-bgremover.root27.dev/api/bgremove', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
