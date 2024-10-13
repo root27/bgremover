@@ -3,11 +3,6 @@ name: Containers Update
 
 on:
   push:
-    branches:
-      - master
-    paths:
-      - http/**
-      - python/**
     tags:
       - v**
 
@@ -28,7 +23,7 @@ jobs:
           host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          source: "Dockerfiles/,http/server.go,python/,go.mod,go.sum"
+          source: "Dockerfiles/,http/server.go,python/,go.mod,go.sum,docker-compose.yml"
           target: /home/web-apps/bgremover
           
 
@@ -42,5 +37,5 @@ jobs:
           script: |
              
               cd /home/web-apps/bgremover
-              docker-compose -f ./Dockerfiles/docker-compose.yml up -d
+              docker-compose up -d
             

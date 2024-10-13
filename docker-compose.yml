@@ -4,7 +4,7 @@ services:
   bgremover-grpc-client:
     build:
       context: .
-      dockerfile: ./Dockerfile.grpc_client
+      dockerfile: Dockerfiles/Dockerfile.grpc_client
     container_name: bgremover-grpc-client
     ports:
       - "10000:10000"
@@ -14,7 +14,7 @@ services:
   bgremover-grpc-server:
     build:
       context: .
-      dockerfile: ./Dockerfile.python_grpc_server
+      dockerfile: Dockerfiles/Dockerfile.python_grpc_server
     container_name: bgremover-grpc-server
     networks:
       - bgremover-service
