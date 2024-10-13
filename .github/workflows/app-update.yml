@@ -4,7 +4,7 @@ name: Containers Update
 on:
   push:
     tags:
-      - v**
+      - web**
 
 
 jobs:

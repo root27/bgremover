@@ -4,7 +4,7 @@ name: Cli tool releaser
 on:
   push:
     tags:
-      - cli*
+      - v*
 
 permissions:
   contents: write
