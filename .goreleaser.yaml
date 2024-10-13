@@ -11,6 +11,16 @@ builds:
       - windows
       - darwin
 
+
+
+
+brews:
+  -
+    name: bgremover-cli
+    repository:
+        owner: root27
+        name: homebrew-tools
+  
 archives:
   - format: tar.gz
     name_template: >-

@@ -1,0 +1,30 @@
+name: Cli tool releaser
+
+
+on:
+  push:
+    tags:
+      - cli*
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Goreleaser
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+    
+      - name: Setup Go
+        uses: actions/setup-go@v5
+
+      - name: Run releaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
