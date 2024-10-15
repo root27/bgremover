@@ -15,6 +15,9 @@ brew install root27/tools/bgremover-cli
 
 ### Cli-tool Usage
 
+![Cli-Image](.github/assets/cli-image.png)
+
+
 ```code
 
 ./bgremover-cli -file=<Path-to-input-image> -out=<Specified-filename-to-save>(OPTIONAL)
@@ -36,7 +39,6 @@ If you encounter the problems while executing the binary, you can change permiss
 chmod +x bgremover-cli
 
 ```
-![Cli-Image](https://raw.githubusercontent/root27/bgremover/master/.github/assets/cli-image.png)
 
 
 
