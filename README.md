@@ -17,7 +17,7 @@ brew install root27/tools/bgremover-cli
 
 ```code
 
-./bgremover-cli -file=<Path-to-input-image> -out=<Specified-filename-to-save>
+./bgremover-cli -file=<Path-to-input-image> -out=<Specified-filename-to-save>(OPTIONAL)
 
 ```
 
