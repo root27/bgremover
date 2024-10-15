@@ -65,8 +65,6 @@ func main() {
 
 	}
 
-	fmt.Println("out file: ", outfile)
-
 	buf := &bytes.Buffer{}
 
 	mWriter := multipart.NewWriter(buf)
@@ -145,4 +143,7 @@ func main() {
 		fmt.Println("Could not save processed image")
 		return
 	}
+
+	fmt.Println("out file: ", outfile)
+
 }
