@@ -36,7 +36,7 @@ If you encounter the problems while executing the binary, you can change permiss
 chmod +x bgremover-cli
 
 ```
-[!Cli-Image](https://raw.githubusercontent.com/root27/bgremover/master/.github/images/cli-image.png)
+![Cli-Image](https://raw.githubusercontent/root27/bgremover/master/.github/assets/cli-image.png)
 
 
 
