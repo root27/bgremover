@@ -67,7 +67,11 @@ func main() {
 			return
 		}
 
-		stream, err := client.RemoveBG(context.Background())
+		ctx, cancel := context.WithTimeout(context.Background(), 30)
+
+		defer cancel()
+
+		stream, err := client.RemoveBG(ctx)
 
 		if err != nil {
 
@@ -77,9 +81,11 @@ func main() {
 
 		buf := make([]byte, 1024*1024)
 
+		reader := bytes.NewReader(bytesRead)
+
 		for {
 
-			n, err := bytes.NewReader(bytesRead).Read(buf)
+			n, err := reader.Read(buf)
 
 			if err == io.EOF {
 				break
