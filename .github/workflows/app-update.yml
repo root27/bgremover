@@ -38,5 +38,5 @@ jobs:
           script: |
              
               cd /home/web-apps/bgremover
-              docker-compose up -d
+              docker-compose up --force-recreate --build -d
             
