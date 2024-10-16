@@ -67,11 +67,42 @@ func main() {
 			return
 		}
 
-		response, err := client.RemoveBG(context.Background(), &pb.ImageRequest{Image: bytesRead})
+		stream, err := client.RemoveBG(context.Background())
 
 		if err != nil {
 
-			http.Error(w, "Error processing Image", http.StatusInternalServerError)
+			http.Error(w, "Error streaming", http.StatusInternalServerError)
+			return
+		}
+
+		buf := make([]byte, 1024*1024)
+
+		for {
+
+			n, err := bytes.NewReader(bytesRead).Read(buf)
+
+			if err == io.EOF {
+				break
+			}
+
+			if err != nil {
+
+				http.Error(w, "Error reading image", http.StatusInternalServerError)
+				return
+			}
+
+			if err := stream.Send(&pb.ImageRequest{Image: buf[:n]}); err != nil {
+				http.Error(w, "Error sending image", http.StatusInternalServerError)
+				return
+			}
+
+		}
+
+		response, err := stream.CloseAndRecv()
+
+		if err != nil {
+
+			http.Error(w, "Error receiving response", http.StatusInternalServerError)
 			return
 		}
 

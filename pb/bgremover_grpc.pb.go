@@ -26,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RemoveClient interface {
-	RemoveBG(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageResponse, error)
+	RemoveBG(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ImageRequest, ImageResponse], error)
 }
 
 type removeClient struct {
@@ -37,21 +37,24 @@ func NewRemoveClient(cc grpc.ClientConnInterface) RemoveClient {
 	return &removeClient{cc}
 }
 
-func (c *removeClient) RemoveBG(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageResponse, error) {
+func (c *removeClient) RemoveBG(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ImageRequest, ImageResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ImageResponse)
-	err := c.cc.Invoke(ctx, Remove_RemoveBG_FullMethodName, in, out, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Remove_ServiceDesc.Streams[0], Remove_RemoveBG_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &grpc.GenericClientStream[ImageRequest, ImageResponse]{ClientStream: stream}
+	return x, nil
 }
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type Remove_RemoveBGClient = grpc.ClientStreamingClient[ImageRequest, ImageResponse]
 
 // RemoveServer is the server API for Remove service.
 // All implementations must embed UnimplementedRemoveServer
 // for forward compatibility.
 type RemoveServer interface {
-	RemoveBG(context.Context, *ImageRequest) (*ImageResponse, error)
+	RemoveBG(grpc.ClientStreamingServer[ImageRequest, ImageResponse]) error
 	mustEmbedUnimplementedRemoveServer()
 }
 
@@ -62,8 +65,8 @@ type RemoveServer interface {
 // pointer dereference when methods are called.
 type UnimplementedRemoveServer struct{}
 
-func (UnimplementedRemoveServer) RemoveBG(context.Context, *ImageRequest) (*ImageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RemoveBG not implemented")
+func (UnimplementedRemoveServer) RemoveBG(grpc.ClientStreamingServer[ImageRequest, ImageResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method RemoveBG not implemented")
 }
 func (UnimplementedRemoveServer) mustEmbedUnimplementedRemoveServer() {}
 func (UnimplementedRemoveServer) testEmbeddedByValue()                {}
@@ -86,23 +89,12 @@ func RegisterRemoveServer(s grpc.ServiceRegistrar, srv RemoveServer) {
 	s.RegisterService(&Remove_ServiceDesc, srv)
 }
 
-func _Remove_RemoveBG_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ImageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RemoveServer).RemoveBG(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Remove_RemoveBG_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RemoveServer).RemoveBG(ctx, req.(*ImageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+func _Remove_RemoveBG_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(RemoveServer).RemoveBG(&grpc.GenericServerStream[ImageRequest, ImageResponse]{ServerStream: stream})
 }
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type Remove_RemoveBGServer = grpc.ClientStreamingServer[ImageRequest, ImageResponse]
 
 // Remove_ServiceDesc is the grpc.ServiceDesc for Remove service.
 // It's only intended for direct use with grpc.RegisterService,
@@ -110,12 +102,13 @@ func _Remove_RemoveBG_Handler(srv interface{}, ctx context.Context, dec func(int
 var Remove_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.Remove",
 	HandlerType: (*RemoveServer)(nil),
-	Methods: []grpc.MethodDesc{
+	Methods:     []grpc.MethodDesc{},
+	Streams: []grpc.StreamDesc{
 		{
-			MethodName: "RemoveBG",
-			Handler:    _Remove_RemoveBG_Handler,
+			StreamName:    "RemoveBG",
+			Handler:       _Remove_RemoveBG_Handler,
+			ClientStreams: true,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
 	Metadata: "proto/bgremover.proto",
 }

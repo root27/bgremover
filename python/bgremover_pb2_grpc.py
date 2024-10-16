@@ -5,7 +5,7 @@ import warnings
 
 import bgremover_pb2 as bgremover__pb2
 
-GRPC_GENERATED_VERSION = '1.66.2'
+GRPC_GENERATED_VERSION = '1.67.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -34,7 +34,7 @@ class RemoveStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.RemoveBG = channel.unary_unary(
+        self.RemoveBG = channel.stream_unary(
                 '/pb.Remove/RemoveBG',
                 request_serializer=bgremover__pb2.ImageRequest.SerializeToString,
                 response_deserializer=bgremover__pb2.ImageResponse.FromString,
@@ -44,7 +44,7 @@ class RemoveStub(object):
 class RemoveServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def RemoveBG(self, request, context):
+    def RemoveBG(self, request_iterator, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -53,7 +53,7 @@ class RemoveServicer(object):
 
 def add_RemoveServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'RemoveBG': grpc.unary_unary_rpc_method_handler(
+            'RemoveBG': grpc.stream_unary_rpc_method_handler(
                     servicer.RemoveBG,
                     request_deserializer=bgremover__pb2.ImageRequest.FromString,
                     response_serializer=bgremover__pb2.ImageResponse.SerializeToString,
@@ -70,7 +70,7 @@ class Remove(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def RemoveBG(request,
+    def RemoveBG(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -80,8 +80,8 @@ class Remove(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
+        return grpc.experimental.stream_unary(
+            request_iterator,
             target,
             '/pb.Remove/RemoveBG',
             bgremover__pb2.ImageRequest.SerializeToString,

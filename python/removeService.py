@@ -11,8 +11,15 @@ from rembg import remove
 
 
 class RemoveServicer(bgremover__pb.RemoveServicer):
-    def RemoveBG(self, request, context):
-        output = remove(request.Image, force_return_bytes=True)
+    def RemoveBG(self, request_iterator, context):
+
+        imageData = b''
+
+        for chunk in request_iterator:
+            imageData += chunk.Image
+
+        output = remove(imageData,force_return_bytes=True)
+
         return bgremover__pb2.ImageResponse(ProcessedImage=output)
 
 def serve():

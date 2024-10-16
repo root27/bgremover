@@ -16,5 +16,5 @@ message ImageResponse {
 
 service Remove {
 	
-	rpc RemoveBG(ImageRequest) returns (ImageResponse) {}
+	rpc RemoveBG(stream ImageRequest) returns (ImageResponse) {}
 }

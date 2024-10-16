@@ -16,6 +16,13 @@ python-grpc-build:
 python-grpc-server:
 	@docker run -p 50051:50051 --name python-grpc-server python-grpc
 
+
+python-protogen-build:
+	@docker build -t python-proto -f ./Dockerfiles/Dockerfile.pythonprotogen .
+	@docker create --name grpc-container python-proto
+	@docker cp grpc-container:/output/generated ./python 
+	@echo python proto generated
+
 ##Gorelease make commands
 
 release:

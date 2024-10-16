@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x62gremover.proto\x12\x02pb\"\x1d\n\x0cImageRequest\x12\r\n\x05Image\x18\x01 \x01(\x0c\"\'\n\rImageResponse\x12\x16\n\x0eProcessedImage\x18\x01 \x01(\x0c\x32;\n\x06Remove\x12\x31\n\x08RemoveBG\x12\x10.pb.ImageRequest\x1a\x11.pb.ImageResponse\"\x00\x42\x07Z\x05../pbb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x62gremover.proto\x12\x02pb\"\x1d\n\x0cImageRequest\x12\r\n\x05Image\x18\x01 \x01(\x0c\"\'\n\rImageResponse\x12\x16\n\x0eProcessedImage\x18\x01 \x01(\x0c\x32=\n\x06Remove\x12\x33\n\x08RemoveBG\x12\x10.pb.ImageRequest\x1a\x11.pb.ImageResponse\"\x00(\x01\x42\x07Z\x05../pbb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -37,5 +37,5 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_IMAGERESPONSE']._serialized_start=54
   _globals['_IMAGERESPONSE']._serialized_end=93
   _globals['_REMOVE']._serialized_start=95
-  _globals['_REMOVE']._serialized_end=154
+  _globals['_REMOVE']._serialized_end=156
 # @@protoc_insertion_point(module_scope)
