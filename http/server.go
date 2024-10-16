@@ -9,6 +9,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"time"
 )
 
 const (
@@ -17,7 +18,7 @@ const (
 
 func main() {
 
-	conn, err := grpc.Dial("bgremover-grpc-server:50051", grpc.WithTransportCredentials(
+	conn, err := grpc.NewClient("bgremover-grpc-server:50051", grpc.WithTransportCredentials(
 		insecure.NewCredentials(),
 	))
 
@@ -67,7 +68,7 @@ func main() {
 			return
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), 30)
+		ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 
 		defer cancel()
 
@@ -79,7 +80,7 @@ func main() {
 			return
 		}
 
-		buf := make([]byte, 1024*1024)
+		buf := make([]byte, 1024)
 
 		reader := bytes.NewReader(bytesRead)
 
@@ -112,7 +113,14 @@ func main() {
 			return
 		}
 
-		io.Copy(w, bytes.NewReader(response.ProcessedImage))
+		_, err = w.Write(response.ProcessedImage)
+
+		if err != nil {
+
+			log.Println("Error writing response", err)
+			http.Error(w, "Error writing response", http.StatusInternalServerError)
+			return
+		}
 
 	})
 
