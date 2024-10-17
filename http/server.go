@@ -41,6 +41,20 @@ func main() {
 
 		w.Header().Set("Content-Type", "image/*")
 
+		if r.Method != http.MethodPost {
+
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+
+		}
+
+		if r.MultipartForm == nil {
+
+			http.Error(w, "No file found", http.StatusBadRequest)
+			return
+
+		}
+
 		err := r.ParseMultipartForm(10 << 20)
 
 		if err != nil {
