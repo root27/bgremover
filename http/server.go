@@ -117,7 +117,6 @@ func main() {
 
 		if err != nil {
 
-			log.Println("Error writing response", err)
 			http.Error(w, "Error writing response", http.StatusInternalServerError)
 			return
 		}
