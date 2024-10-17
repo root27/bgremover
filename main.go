@@ -110,7 +110,7 @@ func main() {
 
 	client := &http.Client{}
 
-	req, err := http.NewRequest("POST", "https://api-bgremover/root27.dev/api/bgremove", buf)
+	req, err := http.NewRequest("POST", "https://api-bgremover.root27.dev/api/bgremove", buf)
 
 	if err != nil {
 
