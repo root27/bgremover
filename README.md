@@ -1,9 +1,11 @@
-### bgremover
+## bgremover
 
 This is background remover service which is available as command-line tool and http server.
 
+### Command-line Tool
 
-### Cli-tool Installation
+
+#### Installation
 
 You can find [releases](https://github.com/root27/bgremover/releases) or if you are using Macos and homebrew, you can use the command below to install and use.
 
@@ -13,7 +15,7 @@ brew install root27/tools/bgremover-cli
 
 ```
 
-### Cli-tool Usage
+#### Usage
 
 ![Cli-Image](.github/assets/cli-image.png)
 
@@ -39,6 +41,19 @@ If you encounter the problems while executing the binary, you can change permiss
 chmod +x bgremover-cli
 
 ```
+
+### Web Service
+
+You can use [web service](https://bgremover.root27.dev) instead command-line tool.
+
+![HomePage](.github/assets/homepage.png)
+
+You can see the example of web application usage below;
+
+![Usage](.github/assets/example.png)
+
+In the web app, the processed image can be previewed and directly it can be downloaded.
+
 
 
 
