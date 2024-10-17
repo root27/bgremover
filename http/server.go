@@ -48,13 +48,6 @@ func main() {
 
 		}
 
-		if r.MultipartForm == nil {
-
-			http.Error(w, "No file found", http.StatusBadRequest)
-			return
-
-		}
-
 		err := r.ParseMultipartForm(10 << 20)
 
 		if err != nil {
@@ -82,7 +75,7 @@ func main() {
 			return
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 
 		defer cancel()
 

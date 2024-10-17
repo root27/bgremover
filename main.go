@@ -110,7 +110,7 @@ func main() {
 
 	client := &http.Client{}
 
-	req, err := http.NewRequest("POST", "https://api-bgremover.root27.dev/api/bgremove", buf)
+	req, err := http.NewRequest("POST", "https://api-bgremover/root27.dev/api/bgremove", buf)
 
 	if err != nil {
 
@@ -141,6 +141,13 @@ func main() {
 	if err != nil {
 
 		fmt.Println("Could not save processed image")
+		return
+	}
+
+	outStats, _ := os.Stat(outfile)
+
+	if outStats.Size() == 0 {
+		fmt.Println("Could not process image")
 		return
 	}
 
