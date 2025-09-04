@@ -1,5 +1,8 @@
 ## bgremover
 
+>[!WARNING]
+>The service not available temporarily
+
 This is background remover service which is available as command-line tool and http server.
 
 ### Command-line Tool
